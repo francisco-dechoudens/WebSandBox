@@ -44,6 +44,8 @@ function displayContents(txt) {
         var el = document.getElementById('main'); 
         el.innerHTML = txt; //display output in DOM
     } 
+
+ var someInt = 0;  
 function ConvertKMLContent(txt,numberOfDivision) {		
 		
 		if (window.DOMParser)
@@ -53,20 +55,21 @@ function ConvertKMLContent(txt,numberOfDivision) {
 		  var coordString = xmlDoc.getElementsByTagName("coordinates")[0].childNodes[0].nodeValue;
 		  var arrayOfCoord = coordString.split(" ");
 		  
-		  var coord;
-		  var newTxt = '';
-		  var someInt = 0;
+		  
+		 
 		  var vertexesCoord = new Array();
 		  var vertexesId = new Array();
-		  for(coord in arrayOfCoord){
+
+		  for(var coord in arrayOfCoord){
 		  	if (!(someInt % numberOfDivision)) {
+
 		  		vertexesId.push(someInt);
 		  		vertexesCoord.push(arrayOfCoord[coord]);
 		  	};
 		  	someInt = someInt + 1;
 		  }
-		  vertexesId.push(someInt - 1)
-		  vertexesCoord.push(arrayOfCoord[someInt-1]);//to add the last coord
+		  //vertexesId.push(someInt - 1)
+		  //vertexesCoord.push(arrayOfCoord[someInt-1]);//to add the last coord
 
 		  var tab = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp';
 		  var tabCoord = +tab+tab+tab+tab+tab+tab+tab+tab+tab+tab+'&nbsp';
@@ -97,7 +100,7 @@ function ConvertKMLContent(txt,numberOfDivision) {
 				  dkml = dkml +tab+tab+ "&lt;LineString>"+"<br>";
 				  dkml = dkml +tab+tab+tab+ "&lt;coordinates>"+"<br>";
 				  for (var i = lastVertixId; i <= firstVertixId; i++) {
-				  	dkml = dkml +tab+tab+tab+tab+arrayOfCoord[i]+"<br>";	
+				  	dkml = dkml +tab+tab+tab+tab+arrayOfCoord[someInt-i]+"<br>";	
 				  };
 				  dkml = dkml +tab+tab+tab+ "&lt;/coordinates>"+"<br>";
 				  dkml = dkml +tab+tab+ "&lt;/LineString>"+"<br>";

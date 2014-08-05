@@ -1,6 +1,6 @@
 function readText(filePath,numberOfDivision) { 
 
-
+/*
 		var output = ""; //placeholder for text output
         var reader =reader = new FileReader();       
         reader.onload = function (e) {
@@ -10,7 +10,34 @@ function readText(filePath,numberOfDivision) {
         };//end onload()
         
         reader.readAsText(filePath.files[0]);
+*/
+		var data = new Object;
+		var dkmlArray = new Array();
+		var txtFile = " ";
+        var j = 0, k = filePath.files.length;
+     	for (var i = 0; i < k; i++) {
+         var reader = new FileReader();
+         reader.onloadend = function (evt) {
+             if (evt.target.readyState == FileReader.DONE) {
+             	//txtFile = txtFile + evt.target.result;
+             	dkmlArray.push(ConvertKMLContent(evt.target.result,numberOfDivision));
+                 data["File_Content" + j] = btoa(evt.target.result);
+                 j++;
+                 if (j == k){
+                 	 var dkmlConcat = "";
+                 	for(dkml in dkmlArray){
+                 		dkmlConcat = dkmlConcat + dkmlArray[dkml];
+                 	}
+                 	displayContents(dkmlConcat);
+                 	alert("All file has been read");
+                     
+                 }
+             }
+         };
+         reader.readAsBinaryString(filePath.files[i]);
+     }
          
+
         return true;
     }   
 function displayContents(txt) {
@@ -81,7 +108,7 @@ function ConvertKMLContent(txt,numberOfDivision) {
 		 dkml = dkml+"&lt;/Document>";	
 
 		  //dkml = dkml.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-		  displayContents(dkml);
+		  return dkml;
 		  }
 		else // Internet Explorer
 		  {

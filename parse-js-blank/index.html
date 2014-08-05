@@ -18,11 +18,11 @@
   <h1>KML to DKML built οn <a href="http://www.parse.com" alt="Parse">Parse</a></h1>
   <div id="main">
         <div id="input-wrapper">
-            <input id="fileToSubmit" type="file" accept="MIME_type">
+            <input id="fileToSubmit" type="file" accept="MIME_type" multiple />
             
               
               <div><br>
-                  Number of Division (between 5 and 30):
+                  # Coordinate/Division (between 5 and 30):
                <input type="number" id="divisionSelector" min="5" max="30">
              </div><br>
               <input type="button" id="list-item-submit" value="Submit" onclick="doFunction();" />
@@ -47,15 +47,14 @@
    function doFunction() {
     var fileUploadControl = document.getElementById('fileToSubmit');
     var numberOfDivision = document.getElementById('divisionSelector').value;
-    console.log(numberOfDivision);
     if (fileUploadControl.files.length > 0) {
        var file = fileUploadControl.files[0];
        var name = file.name.replace("txt","kml");
        var parseFile = new Parse.File(name, file);
        parseFile.save().then(function() {
                 console.log(readText(fileUploadControl,numberOfDivision));
-                console.log("Woot!");
-                console.dir(arguments);
+                //console.log("Woot!");
+                //console.dir(arguments);
                 var KML = new Parse.Object("KML");
                 KML.set("KMLFile", parseFile);
                 KML.save();
